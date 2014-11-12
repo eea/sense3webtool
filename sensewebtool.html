@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org" id="data-ng-app" data-ng-app="senseWebtool" data-ng-controller="mainController">
+	<head>
+		<title>SENSE3 metadata webtool</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta name="version" content="1.3" />
+		<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="sensewebtool.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.13/angular.js"></script>
+		<script src="http://webq2test.eionet.europa.eu/download/project/Sense_webtool/file/ui-bootstrap-tpls-0.11.0_custom.js"></script>
+		<script src="http://webforms.eionet.europa.eu/js/angular/ui/promise-tracker.js"></script>
+		<script src="http://webforms.eionet.europa.eu/js/angular/ui/promise-tracker-http-interceptor.js"></script>
+		<script src="multiselect.js"></script>
+		<script src="sensewebtool.js"></script>
+	</head>
+	<body>
+		<div class="ng-modal-overlay animate-show" data-ng-show="$root.loadingTracker.active()"></div>
+		<div class="loading-box animate-show" data-ng-show="$root.loadingTracker.active()">
+			<img src="loader.gif" alt="loader image" width="60" height="60" /><br>
+		</div>
+		<div class="container-fluid" data-ng-controller="mainController">
+			<div id="fixed-top-msg">
+				<alert data-ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)"><span class="glyphicon glyphicon-info-sign"></span> {{alert.msg}}</alert>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<h2>SENSE3 metadata webtool</h2>
+					<br />
+					This web form will aid in producing a feed of information requested for SENSE3 in RDF/XML aligning with the <a href="https://joinup.ec.europa.eu/asset/dcat_application_profile/asset_release/dcat-application-profile-data-portals-europe-final" target="_blank">DCAT Application Profile for Data Portals in Europe</a>. Please see the SENSE3 wiki for further <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/Metadata_tool_instructions" target="_blank">instructions on how to use this tool</a>.<br /><br /> 
+					<form class="form-horizontal" name="appForm" role="form">
+						<!-- form-group behaves like "row" when "form-horizontal" -->
+						<fieldset>
+							<legend>
+								Catalogue
+								<small><span class="pull-right"><button class="remove-button-style" data-ng-model="cat_help" data-ng-click="cat_help=!cat_help">Help <span class="glyphicon glyphicon-question-sign"></span></button></span></small>
+							</legend>
+							<div class="help-block" data-ng-show="cat_help">
+								<h5>How to fill out the catalogue information:</h5>
+								<br />
+								<strong>Catalogue title</strong>
+								<p>This property contains a name given to the Catalogue. This maps to <code>dct:title</code> of the <code>dcat:Catalog</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dcttitle" target="_blank">dct:title</a> on the project wiki.</p>
+								<strong>Catalogue description</strong>
+								<p>This property contains a free-text account of the Catalogue. This maps to <code>dct:description</code> of the <code>dcat:Catalog</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dctdescription" target="_blank">dct:description</a> on the project wiki.</p>
+								<strong>Publisher name</strong>
+								<p>This property refers to an entity (organisation) responsible for making the Catalogue available. This maps to <code>foaf:name</code> of the <code>foaf:Organization</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-foafname" target="_blank">foaf:name</a> on the project wiki.</p>
+								<strong>Catalogue homepage</strong>
+								<p>This property refers to a web page that acts as the main page for the Catalogue. This maps to <code>foaf:homepage</code> of the <code>foaf:Organization</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-foafhomepage" target="_blank">foaf:homepage</a> on the project wiki.</p>
+							</div>
+							<div class="panel panel-success">
+								<div class="panel-heading">&nbsp;</div>
+								<div class="panel-body">
+									<div class="form-group">
+										<label for="RDF.Catalog.title" class="col-sm-2 control-label">Catalogue title</label>
+										<div class="col-sm-10"><input type="text" class="form-control" id="RDF.Catalog.title" title="This property contains a name given to the Catalogue. (dct:title)" data-ng-model="instance['rdf:RDF']['dcat:Catalog']['dct:title']"></div>
+									</div>
+									<div class="form-group">
+										<label for="RDF.Catalog.description" class="col-sm-2 control-label">Catalogue description</label>
+										<div class="col-sm-10"><textarea rows="3" class="form-control" id="RDF.Catalog.description" title="This property contains a free-text account of the Catalogue. (dct:description)" data-ng-model="instance['rdf:RDF']['dcat:Catalog']['dct:description']"></textarea></div>
+									</div>
+									<div class="form-group">
+										<label for="RDF.Organization.name" class="col-sm-2 control-label">Publisher name</label>
+										<div class="col-sm-4"><input type="text" class="form-control" id="RDF.Organization.name" title="This property refers to an entity (organisation) responsible for making the Catalogue available. (foaf:name)" data-ng-model="instance['rdf:RDF']['foaf:Organization']['foaf:name']"></div>
+										<label for="RDF.Organization.homepage" class="col-sm-2 control-label">Catalogue homepage</label>
+										<div class="col-sm-4"><input type="text" class="form-control" id="RDF.Organization.homepage" title="This property refers to a web page that acts as the main page for the Catalogue. (foaf:homepage)" data-ng-model="instance['rdf:RDF']['foaf:Organization']['foaf:homepage']['@rdf:resource']"></div>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+						<br /><br />
+						<fieldset>
+							<legend>
+								Datasets
+								<small><span class="pull-right"><button class="remove-button-style" data-ng-model="ds_help" data-ng-click="ds_help=!ds_help">Help <span class="glyphicon glyphicon-question-sign"></span></button></span></small>
+							</legend>
+							<div class="help-block" data-ng-show="ds_help">
+								<h5>How to fill out the dataset information:</h5>
+								<br />
+								<strong>Title</strong>
+								<p>This property contains a name given to the Dataset. This maps to <code>dct:title</code> of the <code>dcat:Dataset</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dcttitle" target="_blank">dct:title</a> on the project wiki.</p>
+								<strong>Issued</strong>
+								<p>This property contains the date of formal issuance (e.g. publication) of the Dataset. This maps to <code>dct:issued</code> of the <code>dcat:Dataset</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dctissued" target="_blank">dct:issued</a> on the project wiki.</p>
+								<strong>Description</strong>
+								<p>This property contains a free-text account of the Dataset. This maps to <code>dct:description</code> of the <code>dcat:Dataset</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dctdescription" target="_blank">dct:description</a> on the project wiki.</p>
+								<strong>General theme(s)</strong>
+								<p>This property refers to a category of the dataset, specified to the selected Eurovoc topics from the DCAT-AP specification. This maps to <code>dcat:theme</code> of the <code>dcat:Dataset</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dctsubject" target="_blank">dcat:theme</a> on the project wiki.</p>
+								<strong>Environmental theme(s)</strong>
+								<p>This property refers to a category of the dataset, specified to the <a href="http://www.eea.europa.eu/themes" target="_blank">EEA environmental topics</a>, thereby mapping by topic to the EEA indicators. This maps to <code>dcat:subject</code> of the <code>dcat:Dataset</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dctsubject" target="_blank">dcat:subject</a> on the project wiki.</p>
+								<strong>Spatial coverage</strong>
+								<p>This property refers to a geographic region that is covered by the Dataset. This maps to <code>dct:spatial</code> of the <code>dcat:Dataset</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dctspatial" target="_blank">dct:spatial</a> on the project wiki.</p>
+								<strong>Temporal coverage</strong>
+								<p>This property refers to a temporal (time) period that the Dataset covers. This maps to <code>dct:temporal</code> of the <code>dcat:Dataset</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dcttemporal" target="_blank">dct:temporal</a> on the project wiki.</p>
+								<strong>Source dataset(s)</strong>
+								<p>This property refers to other datasets that act as the source of this dataset. This maps to <code>dct:source</code> of the <code>dcat:Dataset</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dctsource" target="_blank">dct:source</a> on the project wiki.</p>
+								<strong>Distribution(s)</strong>
+								<p>This property links the Dataset to an available Distribution. This maps to <code>dcat:distribution</code> of the <code>dcat:Dataset</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Class-dcatdistribution" target="_blank">dcat:distribution</a> on the project wiki.</p>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<div data-ng-repeat="ds in instance['rdf:RDF']['dcat:Dataset']" class="panel panel-info">
+										<div class="panel-heading"><b>#{{$index + 1}}</b></div>
+										<div class="panel-body">
+											<div class="form-group">
+												<div class="col-sm-12"></div>
+											</div>
+											<div class="form-group">
+												<label for="ds.title{{$index}}" class="col-sm-1 control-label">Title</label>
+												<div class="col-sm-11"><input type="text" class="form-control" title="This property contains a name given to the Dataset. (dct:title)" id="ds.title{{$index}}" data-ng-model="ds['dct:title']"></div>
+											</div>
+											<div class="form-group">
+												<label for="ds.issued{{$index}}" class="col-sm-1 control-label">Issued</label>
+												<div class="col-sm-2">
+													<input type="text" class="form-control" title="This property contains the date of formal issuance (e.g. publication) of the Dataset. (dct:issued)." datepicker-popup="yyyy-MM-dd" data-ng-click="datepicker.open($event, ds['@rdf:about'])" is-open="datepicker.pickerOpen[ds['@rdf:about']]" data-datepicker-options="datepicker.config" show-button-bar="false" id="ds.issued{{$index}}" data-ng-model="ds['dct:issued']['$']" />
+												</div>
+												<label for="ds.description{{$index}}" class="col-sm-1 control-label">Description</label>
+												<div class="col-sm-8"><textarea class="form-control" title="This property contains a free-text account of the Dataset. (dct:description)" id="ds.description{{$index}}" data-ng-model="ds['dct:description']"></textarea></div>
+											</div>
+											<div class="form-group">
+												<label for="ds.theme{{$index}}" class="col-sm-2 control-label">General theme(s)</label> 
+												<div class="col-sm-2">
+													<div multiselect class="multiselect" title="This property refers to a category of the dataset. (dcat:theme)" id="ds.theme{{$index}}" data-ng-model="ds['dcat:theme']"
+														options="theme.code as theme.label for theme in options.eurovocThemes | orderBy: 'label'" multiple="true" showFilter="true" showCheckAll="false" change="selected()">
+													</div>
+												</div>
+												<label for="ds.subject{{$index}}" class="col-sm-2 control-label">Environmental theme(s)</label> 
+												<div class="col-sm-2">
+													<div multiselect class="multiselect" title="This property refers to a category of the dataset. (dct:subject)" id="ds.subject{{$index}}" data-ng-model="ds['dct:subject']"
+														options="theme.code as theme.label for theme in options.eeaThemes | orderBy: 'label'" multiple="true" showFilter="true" showCheckAll="false" change="selected()">
+													</div>
+												</div>
+												<label for="ds.spatial{{$index}}" class="col-sm-2 control-label">Spatial coverage</label>
+												<div class="col-sm-2">
+													<div multiselect class="multiselect" id="ds.spatial{{$index}}" data-ng-model="ds['dct:spatial']"
+														options="country.code as country.label for country in options.spatial | orderBy: 'label'" multiple="true" showFilter="true" showCheckAll="false" change="selected()" title="This property refers to a geographic region that is covered by the Dataset. (dct:spatial).">
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="ds.temporal{{$index}}" class="col-sm-2 control-label">Temporal coverage</label>
+												<div class="col-sm-2">
+													<div multiselect class="multiselect" title="This property refers to a temporal period that the Dataset covers. (dct:temporal)" id="ds.temporal{{$index}}" data-ng-model="ds['dct:temporal']"
+														options="year.code as year.label for year in options.years" multiple="true" showFilter="true" showCheckAll="false" change="selected()">
+													</div>
+												</div>
+												<label for="ds.source{{$index}}" class="col-sm-2 control-label">Source dataset(s)</label>
+												<div class="col-sm-2">
+													<div multiselect class="multiselect" title="This property refers to other datasets that act as the source of this dataset (dct:source)" id="ds.source{{$index}}" data-ng-model="ds['dct:source']"
+														options="ds.code as  ds.label for ds in getDSOption(ds['@rdf:about']) | orderBy: 'label'" multiple="true" showFilter="true" showCheckAll="false" change="selected()">
+													</div>
+												</div>
+												<label for="ds.distribution{{$index}}" class="col-sm-2 control-label">Distribution(s) <br><i>(First add them below)</i></label>
+												<div class="col-sm-2">
+													<div multiselect class="multiselect" title="This property links the Dataset to an available Distribution. (dcat:distribution)" id="ds.distribution{{$index}}" data-ng-model="ds['dcat:distribution']"
+														options="di.code as di.label for di in getDistributionOption() | orderBy: 'label'" multiple="true" showFilter="true" showCheckAll="false" change="selected()">
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="col-sm-12">
+													<button type="button" class="btn btn-default btn-sm" data-ng-click="removeItem(instance['rdf:RDF']['dcat:Dataset'], $index, ds)"><span class="glyphicon glyphicon-remove-sign"></span> Remove dataset</button>
+													<button type="button" title="Copy all relevant information from this dataset to a new Indicator assessment that will be added to the list further down on the page." class="btn btn-default btn-sm" data-ng-click="copyDatasetAsIndicator($index)"><span class="glyphicon glyphicon-share"></span> Copy to new indicator assessment</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<button class="btn btn-default" data-ng-click="addItem(datasetpath)"><span class="glyphicon glyphicon-plus-sign"></span> Add dataset</button>
+								</div>
+							</div>
+						</fieldset>
+						<br /><br />
+						<fieldset>
+							<legend>
+								Distributions
+								<small><span class="pull-right"><button class="remove-button-style" data-ng-model="di_help" data-ng-click="di_help=!di_help">Help <span class="glyphicon glyphicon-question-sign"></span></button></span></small>
+							</legend>
+							<div class="help-block" data-ng-show="di_help">
+								<h5>How to fill out the distribution information:</h5>
+								<br />
+								<strong>Description</strong>
+								<p>This property contains a free-text account of the Distribution. This maps to <code>dct:description</code> of the <code>dcat:Distribution</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dctdescription" target="_blank">dct:description</a> on the project wiki.</p>
+								<strong>Format</strong>
+								<p>This property refers to the file format of the Distribution. This maps to <code>dct:format</code> of the <code>dcat:Distribution</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dctformat" target="_blank">dct:format</a> on the project wiki.</p>
+								<strong>License (URL)</strong>
+								<p>This property refers to the licence under which the Distribution is made available. Start typing for suggestions from our recommended licenses, or input your own (remember to provide a full URL, starting with "http://"). This maps to <code>dct:license</code> of the <code>dcat:Distribution</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dctlicense" target="_blank">dct:license</a> on the project wiki, where you also can find a list of our recommended licenses.</p>
+								<strong>Access URL</strong>
+								<p>This property contains a URL that gives access to a Distribution of the Dataset. The resource at the access URL may contain information about how to get the Dataset. Make sure to provide a full URL, starting with "http://". This maps to <code>dcat:accessURL</code> of the <code>dcat:Distribution</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dcataccessURL" target="_blank">dcat:accessURL</a> on the project wiki.</p>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<div data-ng-repeat="di in instance['rdf:RDF']['dcat:Distribution']" class="panel panel-danger">
+										<div class="panel-heading"><b>#{{$index + 1}}</b></div>
+										<div class="panel-body">
+											<div class="form-group">
+												<label for="di.description{{$index}}" class="col-sm-1 control-label">Description</label>
+												<div class="col-sm-5"><input type="text" class="form-control" title="This property contains a free-text account of the Distribution. (dct:description)" id="di.description{{$index}}" data-ng-model="di['dct:description']"></div>
+												<label for="di.format{{$index}}" class="col-sm-1 control-label">Format</label>
+												<div class="col-sm-5"><select class="form-control" title="This property refers to the file format of the Distribution. (dct:format)" id="di.format{{$index}}" data-ng-model="di['dct:format']['@rdf:resource']" data-ng-options="format.code as format.label for format in options.formats"></select></div>
+											</div>
+											<div class="form-group">
+												<label for="di.license{{$index}}" class="col-sm-1 control-label">License (URL)</label> 
+												<div class="col-sm-5"><input type="text" class="form-control" title="This property refers to the licence under which the Distribution is made available. (dct:license)" id="di.license{{$index}}" data-ng-model="di['dct:license']['@rdf:resource']" typeahead="license.code as license.label for license in options.licenses | filter:$viewValue | limitTo:10"></div>
+												<label for="di.accessURL{{$index}}" class="col-sm-1 control-label">Access URL</label> 
+												<div class="col-sm-5"><input type="text" class="form-control" title="This property contains a URL that gives access to a Distribution of the Dataset. The resource at the access URL may contain information about how to get the Dataset. (dcat:accessURL)" id="di.accessURL{{$index}}" data-ng-model="di['dcat:accessURL']['@rdf:resource']" /></div>
+											</div>
+											<div class="form-group">
+												<div class="col-sm-12"><button type="button" class="btn btn-default btn-sm" data-ng-click="removeItem(instance['rdf:RDF']['dcat:Distribution'], $index, di)"><span class="glyphicon glyphicon-remove-sign"></span> Remove distribution</button></div>
+											</div>
+										</div>
+									</div>
+									<button class="btn btn-default" data-ng-click="addItem(distributionpath)"><span class="glyphicon glyphicon-plus-sign"></span> Add distribution</button>
+								</div>
+							</div>
+						</fieldset>
+						<br /><br />
+						<fieldset>
+							<legend>
+								Indicator assessments
+								<small><span class="pull-right"><button class="remove-button-style" data-ng-model="ia_help" data-ng-click="ia_help=!ia_help">Help <span class="glyphicon glyphicon-question-sign"></span></button></span></small>
+							</legend>
+							<div class="help-block" data-ng-show="ia_help">
+								<h5>How to fill out the indicator assessment information:</h5>
+								<br />
+								<strong>Title</strong>
+								<p>This property contains a name given to the indicator assessment. This maps to <code>dct:title</code> of the <code>sense:IndicatorAssessment</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dcttitle" target="_blank">dct:title</a> on the project wiki.</p>
+								<strong>Conforms to</strong>
+								<p>This property shall be used to point from an indicator assessment to the indicator specification (if available online). Make sure to provide a full URL, starting with "http://". This maps to <code>dct:conformsTo</code> of the <code>sense:IndicatorAssessment</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dctconformsTo" target="_blank">dct:conformsTo</a> on the project wiki.</p>
+								<strong>Primary topic of</strong>
+								<p>This property links this assessment to a web page that has the assessment as its primary topic. Make sure to provide a full URL, starting with "http://". This maps to <code>foaf:isPrimaryTopicOf</code> of the <code>sense:IndicatorAssessment</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-foafisPrimaryTopicOf" target="_blank">foaf:isPrimaryTopicOf</a> on the project wiki.</p>
+								<strong>Issued</strong>
+								<p>This property contains the date of formal issuance (e.g. publication) of the indicator assessment. This maps to <code>dct:issued</code> of the <code>sense:IndicatorAssessment</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dctissued" target="_blank">dct:issued</a> on the project wiki.</p>
+								<strong>General theme(s)</strong>
+								<p>This property refers to a category of the indicator assessment, specified to the selected Eurovoc topics from the DCAT-AP specification. This maps to <code>dcat:theme</code> of the <code>sense:IndicatorAssessment</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dctsubject" target="_blank">dcat:theme</a> on the project wiki.</p>
+								<strong>Environmental theme(s)</strong>
+								<p>This property refers to a category of the indicator assessment, specified to the <a href="http://www.eea.europa.eu/themes" target="_blank">EEA environmental topics</a>, thereby mapping by topic to the EEA indicators. This maps to <code>dcat:subject</code> of the <code>sense:IndicatorAssessment</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dctsubject" target="_blank">dcat:subject</a> on the project wiki.</p>
+								<strong>Spatial coverage</strong>
+								<p>This property refers to a geographic region that is covered by the indicator assessment. This maps to <code>dct:spatial</code> of the <code>sense:IndicatorAssessment</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dctspatial" target="_blank">dct:spatial</a> on the project wiki.</p>
+								<strong>Temporal coverage</strong>
+								<p>This property refers to a temporal (time) period that the indicator assessment covers. This maps to <code>dct:temporal</code> of the <code>sense:IndicatorAssessment</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dcttemporal" target="_blank">dct:temporal</a> on the project wiki.</p>
+								<strong>Source dataset(s)</strong>
+								<p>This property refers to other datasets that act as the source of this indicator assessment. This maps to <code>dct:source</code> of the <code>sense:IndicatorAssessment</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dctsource" target="_blank">dct:source</a> on the project wiki.</p>
+								<strong>Related external indicator specifications</strong>
+								<p>This section refers to a related indicator specification in another organisation, including the URL and the type of match between the specifications. This maps to <code>skos:*match</code> of the <code>sense:IndicatorAssessment</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-skosmatch" target="_blank">skos:*match</a> on the project wiki. The list of indicators is selected to match the indicators used within SOER.</p>
+								<ul>
+									<li data-ng-repeat="ind in options.indicators | orderBy: 'label'"><a href="{{ind.code}}" target="_blank">{{ind.label}}</a></li>
+								</ul>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<div data-ng-repeat="ia in instance['rdf:RDF']['sense:IndicatorAssessment']" class="panel panel-warning">
+										<div class="panel-heading"><b>#{{$index + 1}}</b></div>
+										<div class="panel-body">
+											<div class="form-group">
+												<label for="ia.title{{$index}}" class="col-sm-1 control-label">Title</label>
+												<div class="col-sm-11"><input type="text" class="form-control" title="This property contains a name given to the assessment. (dct:title)" id="ia.title{{$index}}" data-ng-model="ia['dct:title']"></div>
+											</div>
+											<div class="form-group">
+												<label for="ia.conformsTo{{$index}}" class="col-sm-1 control-label">Conforms to <i>(indicator spec.)</i></label> 
+												<div class="col-sm-5"><input type="text" class="form-control" title="This property shall be used to point from an indicator assessment to the indicator specification (if available online). (dct:conformsTo)" id="ia.conformsTo{{$index}}" data-ng-model="ia['dct:conformsTo']['@rdf:resource']" /></div>
+												<label for="ia.isPrimaryTopicOf{{$index}}" class="col-sm-1 control-label">Primary topic of</label> 
+												<div class="col-sm-5"><input type="text" class="form-control" title="This property links an assessment to a web page that has the assessment as its primary topic. (foaf:isPrimaryTopicOf)" id="ia.isPrimaryTopicOf{{$index}}" data-ng-model="ia['foaf:isPrimaryTopicOf']['@rdf:resource']" /></div>
+											</div>
+											<div class="form-group">
+												<label for="ia.issued{{$index}}" class="col-sm-2 control-label">Issued</label> 
+												<div class="col-sm-2"><input type="text" class="form-control" title="This property contains the date of formal issuance (e.g., publication) of the assessment. (dct:issued)" id="ia.issued{{$index}}" data-ng-model="ia['dct:issued']['$']" datepicker-popup="yyyy-MM-dd" data-ng-click="datepicker.open($event, ia['@rdf:about'])" is-open="datepicker.pickerOpen[ia['@rdf:about']]" data-datepicker-options="datepicker.config" show-button-bar="false" /></div>
+												<label for="ia.theme{{$index}}" class="col-sm-2 control-label">General theme(s)</label> 
+												<div class="col-sm-2">
+													<div multiselect class="multiselect" title="This property refers to a category of the assessment. (dcat:theme)" id="ia.theme{{$index}}" data-ng-model="ia['dcat:theme']"
+														options="theme.code as theme.label for theme in options.eurovocThemes | orderBy: 'label'" multiple="true" showFilter="true" showCheckAll="false" change="selected()">
+													</div>
+												</div>
+												<label for="ia.subject{{$index}}" class="col-sm-2 control-label">Environmental theme(s)</label> 
+												<div class="col-sm-2">
+													<div multiselect class="multiselect" title="This property refers to a category of the assessment. (dcat:subject)" id="ia.subject{{$index}}" data-ng-model="ia['dct:subject']"
+														options="theme.code as theme.label for theme in options.eeaThemes | orderBy: 'label'" multiple="true" showFilter="true" showCheckAll="false" change="selected()">
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="ia.spatial{{$index}}" class="col-sm-2 control-label">Spatial coverage</label>
+												<div class="col-sm-2">
+													<div multiselect class="multiselect" title="This property refers to a geographic region that is covered by the assessment. (dct:spatial)" id="ia.spatial{{$index}}" data-ng-model="ia['dct:spatial']"
+														options="country.code as country.label for country in options.spatial | orderBy: 'label'" multiple="true" showFilter="true" showCheckAll="false" change="selected()">
+													</div>
+												</div>
+												<label for="ia.temporal{{$index}}" class="col-sm-2 control-label">Temporal coverage</label>
+												<div class="col-sm-2">
+													<div multiselect class="multiselect" title="This property refers to a temporal period that the assessment covers. (dct:temporal)" id="ia.temporal{{$index}}" data-ng-model="ia['dct:temporal']"
+														options="year.code as year.label for year in options.years" multiple="true" showFilter="true" showCheckAll="false" change="selected()">
+													</div>
+												</div>
+												<label for="ia.source{{$index}}" class="col-sm-2 control-label">Source dataset(s) <br><i>(First add them above)</i></label>
+												<div class="col-sm-2">
+													<div multiselect class="multiselect" title="This property refers to the source dataset an indicator is built from. (dct:source)" id="ia.source{{$index}}" data-ng-model="ia['dct:source']"
+														options="ds.code as ds.label for ds in getDSOption('') | orderBy: 'label'" multiple="true" showFilter="true" showCheckAll="false" change="selected()">
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="col-sm-12">
+													<div>
+														<h4>Related external indicator specifications</h4>
+														<div class="form-group" data-ng-repeat="match in ia['skos:matches']">
+															<label for="match.url{{$index}}" class="col-sm-1 control-label">Matching indicator</label> 
+															<div class="col-sm-6"><select class="form-control" title="This property refers to the URL referencing a related indicator specification in another organisation. (skos:*match)" id="match.url{{$index}}" data-ng-model="match.matchUrl" data-ng-options="mu.code as mu.label for mu in options.indicators | orderBy: 'label'"></select></div>
+															<label for="match.type{{$index}}" class="col-sm-1 control-label">Type of match</label> 
+															<div class="col-sm-2"><select class="form-control" title="This property refers to the type of reference to a related indicator specification in another organisation. (skos:*match)" id="match.type{{$index}}" data-ng-model="match.matchType" data-ng-options="mt.code as mt.label for mt in options.skosMatchTypes | orderBy: 'label'"></select></div>
+															<div class="col-sm-2"><button class="btn btn-default btn-sm" data-ng-click="removeItem(ia['skos:matches'], $index, match)"><span class="glyphicon glyphicon-remove-sign"></span> Remove match</button></div>
+														</div>
+														<div class="form-group">
+															<div class="col-sm-12"><button class="btn btn-default btn-sm" data-ng-click="addMatchItem(ia['skos:matches'])"><span class="glyphicon glyphicon-plus-sign"></span> Add match</button></div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="col-sm-12"><button class="btn btn-default btn-sm" data-ng-click="removeItem(instance['rdf:RDF']['sense:IndicatorAssessment'], $index, ia)"><span class="glyphicon glyphicon-remove-sign"></span> Remove indicator assessment</button></div>
+											</div>
+										</div>
+									</div>
+									<button class="btn btn-default" data-ng-click="addItem(indicatorAssessmentPath)"><span class="glyphicon glyphicon-plus-sign"></span> Add indicator assessment</button>
+								</div>
+							</div>
+						</fieldset>
+						<br /><br />					
+						<div class="col-sm-12">
+							<span class="pull-right">
+							<input type="button" data-ng-click="saveInstance()" value="Save form" class="btn btn-primary"/>
+							<input type="button" data-ng-click="close()" value="Close form" class="btn btn-default"/>
+							</span>	
+						</div>
+					</form>
+					<br /><br /><br />
+					<!--
+						<br />$scope.instance<br />
+						<pre>{{ instance | json }}</pre>
+						-->
+				</div>
+				<!-- main col -->
+			</div>
+			<!-- main row -->
+		</div>
+		<!-- main container -->
+	</body>
+</html>

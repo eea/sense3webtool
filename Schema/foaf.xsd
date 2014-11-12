@@ -1,0 +1,30 @@
+<?xml version="1.0"?> 
+<xs:schema targetNamespace="http://xmlns.com/foaf/0.1/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:foaf="http://xmlns.com/foaf/0.1/" 
+ 	elementFormDefault="qualified" attributeFormDefault="unqualified">
+ 	<xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" schemaLocation="rdf.xsd"/>
+  
+	<xs:element name="Organization">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+				<xs:element name="homepage" minOccurs="1" maxOccurs="1">
+					<xs:complexType>
+						<xs:attributeGroup ref="rdf:resourceAttrGroup"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="rdf:aboutAttrGroup"/>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="isPrimaryTopicOf">
+		<xs:complexType>
+			<xs:attributeGroup ref="rdf:resourceAttrGroup"/>
+		</xs:complexType>
+	</xs:element>
+	  
+    
+</xs:schema>

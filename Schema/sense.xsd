@@ -1,0 +1,38 @@
+<?xml version="1.0"?> 
+<xs:schema targetNamespace="http://rdfdata.eionet.europa.eu/sense/ontology/"
+	xmlns:sense="http://rdfdata.eionet.europa.eu/sense/ontology/"
+	xmlns:dcat="http://www.w3.org/ns/dcat#"
+	xmlns:dct="http://purl.org/dc/terms/"
+	xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+	xmlns:foaf="http://xmlns.com/foaf/0.1/" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+ 	elementFormDefault="qualified" attributeFormDefault="unqualified">
+ 	<xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" schemaLocation="rdf.xsd"/>
+ 	<xs:import namespace="http://purl.org/dc/terms/" schemaLocation="dct.xsd"/>
+ 	<xs:import namespace="http://www.w3.org/ns/dcat#" schemaLocation="dcat.xsd"/>
+ 	<xs:import namespace="http://xmlns.com/foaf/0.1/" schemaLocation="foaf.xsd"/>
+ 	<xs:import namespace="http://www.w3.org/2004/02/skos/core#" schemaLocation="skos.xsd"/>
+ 	
+  
+  <xs:element name="IndicatorAssessment">  
+   	<xs:complexType>
+   		<xs:sequence>
+				<xs:element ref="dct:title" minOccurs="1" maxOccurs="1" />
+				<xs:element ref="dcat:theme" minOccurs="1" maxOccurs="1" />
+				<xs:element ref="dct:subject" minOccurs="1" maxOccurs="unbounded" />
+				<xs:element ref="dct:issued" minOccurs="1" maxOccurs="1" />
+				<xs:element ref="dct:spatial" minOccurs="1" maxOccurs="unbounded" />
+				<xs:element ref="dct:temporal" minOccurs="1" maxOccurs="unbounded" />				   			
+				<xs:element ref="dct:conformsTo" minOccurs="1" maxOccurs="1" />
+				<xs:element ref="foaf:isPrimaryTopicOf" minOccurs="1" maxOccurs="1" />
+				<xs:element ref="skos:closeMatch" minOccurs="1" maxOccurs="unbounded" />
+				<xs:element ref="skos:relatedMatch" minOccurs="1" maxOccurs="unbounded" />
+				<xs:element ref="dct:source" minOccurs="1" maxOccurs="unbounded" />
+ 			</xs:sequence>
+   		<xs:attributeGroup ref="rdf:aboutAttrGroup"/>
+   	</xs:complexType>
+  </xs:element>
+
+    
+</xs:schema>

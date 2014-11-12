@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF 
+	xmlns:dcat="http://www.w3.org/ns/dcat#" 
+	xmlns:dct="http://purl.org/dc/terms/" 
+	xmlns:foaf="http://xmlns.com/foaf/0.1/" 
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+	xmlns:sense="http://rdfdata.eionet.europa.eu/sense/ontology/" 
+	xmlns:skos="http://www.w3.org/2004/02/skos/core#" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:noNamespaceSchemaLocation="http://dd.eionet.europa.eu/schemas/Sense3-webtool.workingCopy/rdf.xsd" >
+  <dcat:Catalog rdf:about="">
+    <dct:title></dct:title>
+	<dct:description></dct:description>
+    <dct:publisher rdf:resource=""/>
+    <rdf:type rdf:resource="http://www.w3.org/ns/dcat#Catalog"/>
+    <dcat:dataset rdf:resource=""/>
+  </dcat:Catalog>
+  <foaf:Organization rdf:about="">
+    <foaf:name></foaf:name>
+    <foaf:homepage rdf:resource=""/>
+  </foaf:Organization>
+  <dcat:Dataset rdf:about="">
+    <dct:title></dct:title>
+    <dct:description></dct:description>
+    <dcat:theme rdf:resource=""/>
+	<dct:subject rdf:resource=""/>
+    <dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date"/>
+    <dct:spatial rdf:resource=""/>
+    <dct:temporal></dct:temporal>
+    <dct:source rdf:resource=""/>
+    <dcat:distribution rdf:resource=""/>
+  </dcat:Dataset>
+  <dcat:Distribution rdf:about="">
+    <dct:description></dct:description>
+    <dct:format rdf:resource=""/>
+    <dct:license rdf:resource=""/>
+    <dcat:accessURL rdf:resource=""/>
+  </dcat:Distribution>
+  <sense:IndicatorAssessment rdf:about="">
+    <dct:title></dct:title>
+    <dcat:theme rdf:resource=""/>
+    <dct:subject rdf:resource=""/>
+	<dct:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date"/>
+    <dct:spatial rdf:resource=""/>
+    <dct:temporal></dct:temporal>
+    <dct:conformsTo rdf:resource=""/>
+    <foaf:isPrimaryTopicOf rdf:resource=""/>
+    <skos:closeMatch rdf:resource=""/>
+	<skos:relatedMatch rdf:resource=""/>
+    <dct:source rdf:resource=""/>
+  </sense:IndicatorAssessment>
+</rdf:RDF>

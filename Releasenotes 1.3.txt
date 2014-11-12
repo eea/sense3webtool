@@ -1,0 +1,5 @@
+* New functionality for copying all matching fields from a dataset to a new indicator assessment. This aims to help avoiding manual and tedious work when the dataset and indicator assessment are matching.
+* To help provide a URL for the license on each distribution of a dataset, suggestions for the recommended licenses will now appear while typing in the license input field.
+* The list of years for temporal coverage is extended to include years going back 50 years from today.
+* Saving the form now yields a less intrusive confirmation of this action then the previous "OK/Cancel"-dialogue.
+* Small adjustments to the labels of some fields to help explain the meaning of them.

@@ -1,0 +1,21 @@
+<?xml version="1.0"?> 
+<xs:schema targetNamespace="http://www.w3.org/2004/02/skos/core#"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:foaf="http://xmlns.com/foaf/0.1/" 
+ 	elementFormDefault="qualified" attributeFormDefault="unqualified">
+ 	<xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" schemaLocation="rdf.xsd"/>
+  
+	<xs:element name="closeMatch">
+			<xs:complexType>
+				<xs:attributeGroup ref="rdf:resourceAttrGroup"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="relatedMatch">
+			<xs:complexType>
+				<xs:attributeGroup ref="rdf:resourceAttrGroup"/>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

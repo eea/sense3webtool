@@ -1,0 +1,49 @@
+<?xml version="1.0"?> 
+<xs:schema targetNamespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:dct="http://purl.org/dc/terms/"
+	xmlns:dcat="http://www.w3.org/ns/dcat#"
+	xmlns:foaf="http://xmlns.com/foaf/0.1/"
+	xmlns:sense="http://rdfdata.eionet.europa.eu/sense/ontology/" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"  
+ 	elementFormDefault="qualified" attributeFormDefault="qualified"><!-- attributeFormDefault must be qualified here --> 
+  <xs:import namespace="http://purl.org/dc/terms/" schemaLocation="dct.xsd"/>
+  <xs:import namespace="http://www.w3.org/ns/dcat#" schemaLocation="dcat.xsd"/>
+  <xs:import namespace="http://xmlns.com/foaf/0.1/" schemaLocation="foaf.xsd"/>
+  <xs:import namespace="http://rdfdata.eionet.europa.eu/sense/ontology/" schemaLocation="sense.xsd"/>
+  
+  <xs:element name="RDF">
+	    <xs:complexType>
+	      <xs:sequence>
+				  <xs:element ref="dcat:Catalog" minOccurs="1" maxOccurs="1" />
+				  <xs:element ref="foaf:Organization" minOccurs="1" maxOccurs="1" />
+				  <xs:element ref="dcat:Dataset" minOccurs="0" maxOccurs="unbounded" />
+				  <xs:element ref="dcat:Distribution" minOccurs="0" maxOccurs="unbounded" />
+				  <xs:element ref="sense:IndicatorAssessment" minOccurs="0" maxOccurs="unbounded" />
+	  		</xs:sequence>
+  		</xs:complexType>	
+  </xs:element> 
+
+
+	<xs:element name="type">
+		<xs:complexType>
+			<xs:attributeGroup ref="rdf:resourceAttrGroup"/>
+		</xs:complexType>
+	</xs:element>
+
+	
+	<!-- Put attributes into groups to enable attribute namespace references -->
+	<xs:attributeGroup name="aboutAttrGroup">
+    <xs:attribute name="about" type="xs:string" use="required"/>
+  </xs:attributeGroup>
+
+	<xs:attributeGroup name="resourceAttrGroup">
+    <xs:attribute name="resource" type="xs:string" use="required"/>
+  </xs:attributeGroup>
+
+	<xs:attributeGroup name="dateAttrGroup">
+    <xs:attribute name="datatype" type="xs:string" use="required"/>
+  </xs:attributeGroup>
+
+  
+</xs:schema>

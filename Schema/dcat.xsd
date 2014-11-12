@@ -1,0 +1,75 @@
+<?xml version="1.0"?> 
+<xs:schema targetNamespace="http://www.w3.org/ns/dcat#"
+	xmlns:dcat="http://www.w3.org/ns/dcat#"
+	xmlns:dct="http://purl.org/dc/terms/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+ 	elementFormDefault="qualified" attributeFormDefault="unqualified">
+ 	<xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" schemaLocation="rdf.xsd"/>
+ 	<xs:import namespace="http://purl.org/dc/terms/" schemaLocation="dct.xsd"/>
+  
+  <xs:element name="Catalog">  
+   	<xs:complexType>
+   		<xs:sequence>
+   			<xs:element ref="dct:title" minOccurs="1" />
+				<xs:element ref="dct:description" minOccurs="1" />
+   			<xs:element ref="dct:publisher" minOccurs="1" />
+   			<xs:element ref="rdf:type" minOccurs="1" />
+				<xs:element name="dataset" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:attributeGroup ref="rdf:resourceAttrGroup"/>
+					</xs:complexType>
+				</xs:element>
+   		</xs:sequence>
+   		<xs:attributeGroup ref="rdf:aboutAttrGroup"/>
+   	</xs:complexType>
+  </xs:element>
+
+
+	<xs:element name="Dataset">  
+   	<xs:complexType>
+   		<xs:sequence>
+   			<xs:element ref="dct:title" minOccurs="1" />
+   			<xs:element ref="dct:description" minOccurs="1" />
+				<xs:element ref="dcat:theme" minOccurs="1" />
+				<xs:element ref="dct:subject" minOccurs="1" />
+   			<xs:element ref="dct:issued" minOccurs="1" />
+   			<xs:element ref="dct:spatial" minOccurs="1" maxOccurs="unbounded" />
+   			<xs:element ref="dct:temporal" minOccurs="1" maxOccurs="unbounded" />
+   			<xs:element ref="dct:source" minOccurs="1" maxOccurs="unbounded" />
+   			<xs:element name="distribution" minOccurs="1" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:attributeGroup ref="rdf:resourceAttrGroup"/>
+					</xs:complexType>
+				</xs:element>
+   		</xs:sequence>
+   		<xs:attributeGroup ref="rdf:aboutAttrGroup"/>
+   	</xs:complexType>
+  </xs:element>
+
+
+
+	<xs:element name="Distribution">  
+   	<xs:complexType>
+   		<xs:sequence>
+   			<xs:element ref="dct:description" minOccurs="1" maxOccurs="1" />
+   			<xs:element ref="dct:format" minOccurs="1" maxOccurs="1" />
+   			<xs:element ref="dct:license" minOccurs="1" maxOccurs="1" />
+   			<xs:element name="accessURL" minOccurs="1" maxOccurs="1" >
+					<xs:complexType>
+						<xs:attributeGroup ref="rdf:resourceAttrGroup"/>
+					</xs:complexType>
+				</xs:element>
+   		</xs:sequence>
+   		<xs:attributeGroup ref="rdf:aboutAttrGroup"/>
+   	</xs:complexType>
+  </xs:element>
+
+	<xs:element name="theme">
+		<xs:complexType>
+			<xs:attributeGroup ref="rdf:resourceAttrGroup"/>
+		</xs:complexType>
+	</xs:element>
+
+    
+</xs:schema>
