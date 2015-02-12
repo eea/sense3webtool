@@ -238,7 +238,7 @@
 								<strong>Source dataset(s)</strong>
 								<p>This property refers to other datasets that act as the source of this indicator assessment. This maps to <code>dct:source</code> of the <code>sense:IndicatorAssessment</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-dctsource" target="_blank">dct:source</a> on the project wiki.</p>
 								<strong>Related external indicator specifications</strong>
-								<p>This section refers to a related indicator specification in another organisation, including the URL and the type of match between the specifications. This maps to <code>skos:*match</code> of the <code>sense:IndicatorAssessment</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-skosmatch" target="_blank">skos:*match</a> on the project wiki. The list of indicators is selected to match the indicators used within SOER.</p>
+								<p>This section refers to a related indicator specification in another organisation, including the URL and the type of match between the specifications. This maps to <code>skos:*match</code> of the <code>sense:IndicatorAssessment</code>. See <a href="https://taskman.eionet.europa.eu/projects/linkeddata/wiki/SENSE3_schema#Property-skosmatch" target="_blank">skos:*match</a> on the project wiki. The list of indicators is selected to match the indicators used within SOER, but covers also all the EEA Core set of indicators (CSI).</p>
 								<ul>
 									<li data-ng-repeat="ind in options.indicators | orderBy: 'label'"><a href="{{ind.code}}" target="_blank">{{ind.label}}</a></li>
 								</ul>
