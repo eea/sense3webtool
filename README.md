@@ -1,12 +1,14 @@
-sense3webtool
-=============
+# sense3webtool
+
 
 Webforms tool to produce the RDF/XML DCAT file for the SENSE3 project.
 
-For information on the tool and update history, please see https://taskman.eionet.europa.eu/projects/linkeddata/wiki/Metadata_tool.
+## More information
 
-Copyright and license
-=====================
+For more information on the tool and update history, please see https://taskman.eionet.europa.eu/projects/linkeddata/wiki/Metadata_tool.
+
+## Copyright and license
+
 The Initial Owner of the Original Code is European Environment Agency (EEA).
 All Rights Reserved.
 
@@ -15,3 +17,5 @@ you can redistribute it and/or modify it under the terms of the GNU
 General Public License as published by the Free Software Foundation;
 either version 2 of the License, or (at your option) any later
 version.
+
+See [LICENSE.md](./LICENSE.md) for more information.
